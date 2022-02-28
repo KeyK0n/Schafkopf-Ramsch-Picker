@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Schafkopf Spielmodus</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="icon" href="ressources/iconEichel.png">
+    </head>
+    <body>
+        <div id="main">
+            <h1>Crazy Schafkopf Spielmodus Selektor</h1>
+
+            <p id="gamemode">Gew&auml;hlter Spielmodus</p>
+
+            <button onclick="GamemodeSwitcher()">W&auml;hle Spielmodus</button>
+
+            <img src="ressources/Schafkopf.jpg">
+        </div>
+
+        <script>
+            function GamemodeSwitcher() {
+                const gamemodes = [
+                    "Der Alte muss", 
+                    "Geschoben", 
+                    "10er eingereiht",
+                    "Normal",
+                    "Trumpffrei",
+                    "Trumpffrei 10er eingereiht"
+                ];
+
+                document.getElementById("gamemode").innerHTML = gamemodes[getRandomInt(gamemodes.length)];
+            }
+
+            function getRandomInt(max) {
+                return Math.floor(Math.random() * max);
+            }
+        </script>
+
+    </body>
+</html>

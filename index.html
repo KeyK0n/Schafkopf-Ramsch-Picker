@@ -8,50 +8,50 @@
     </head>
     <body onload="updateSlidersAndGamesModesOnLoad()">
         <div id="topbar">
-            <button onclick="showSettings()">Settings</button>
+            <button onclick="showSettings();this.blur();" style="touch-action: none;">Settings</button>
             <div id="settings">
                 <div>Normal</div>
                 <div class="row">
-                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <input class="slider" type="range" min="0" max="10" oninput="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
                     <div class="weight" id="normal">1</div>
                 </div>
                 
                 <div>10er eingereiht</div>
                 <div class="row">
-                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <input class="slider" type="range" min="0" max="10" oninput="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
                     <div class="weight" id="zehner">1</div>
                 </div>
 
                 <div>Trumpffrei</div>
                 <div class="row">
-                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <input class="slider" type="range" min="0" max="10" oninput="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
                     <div class="weight" id="trumpffrei">1</div>
                 </div>
 
                 <div>Trumpffrei 10er eingereiht</div>
                 <div class="row">
-                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <input class="slider" type="range" min="0" max="10" oninput="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
                     <div class="weight" id="trumpffreiZehner">1</div>
                 </div>
 
                 <div>Geschoben</div>
                 <div class="row">
-                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <input class="slider" type="range" min="0" max="10" oninput="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
                     <div class="weight" id="geschoben">1</div>
                 </div>
 
                 <div>Geschoben trumpffrei</div>
                 <div class="row">
-                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <input class="slider" type="range" min="0" max="10" oninput="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
                     <div class="weight" id="geschobenTrumpffrei">1</div>
                 </div>
 
                 <div>Der Alte muss</div>
                 <div class="row">
-                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <input class="slider" type="range" min="0" max="10" oninput="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
                     <div class="weight" id="derAlteMuss">1</div>
                 </div>
-                
+
                 <button onclick="resetSettings()">Reset</button>
             </div>
         </div>
@@ -64,14 +64,14 @@
 
             <div id="cardsContainer">
                 <div class="cards-fan-container">
-                    <img class="card-fan" id="card1" src="./Karten/schellenUnter.png" />
-                    <img class="card-fan" id="card2" src="./Karten/herzUnter.png" />
-                    <img class="card-fan" id="card3" src="./Karten/blattUnter.png" />
-                    <img class="card-fan" id="card4" src="./Karten/eichelUnter.png" />
-                    <img class="card-fan" id="card5" src="./Karten/schellenOber.png" />
-                    <img class="card-fan" id="card6" src="./Karten/herzOber.png" />
-                    <img class="card-fan" id="card7" src="./Karten/blattOber.png" />
-                    <img class="card-fan" id="card8" src="./Karten/eichelOber.png" />
+                    <img class="card-fan" id="card1" src="/ressources/Karten/schellenUnter.png" />
+                    <img class="card-fan" id="card2" src="/ressources/Karten/herzUnter.png" />
+                    <img class="card-fan" id="card3" src="/ressources/Karten/blattUnter.png" />
+                    <img class="card-fan" id="card4" src="/ressources/Karten/eichelUnter.png" />
+                    <img class="card-fan" id="card5" src="/ressources/Karten/schellenOber.png" />
+                    <img class="card-fan" id="card6" src="/ressources/Karten/herzOber.png" />
+                    <img class="card-fan" id="card7" src="/ressources/Karten/blattOber.png" />
+                    <img class="card-fan" id="card8" src="/ressources/Karten/eichelOber.png" />
                 </div>
             </div>
         </div>

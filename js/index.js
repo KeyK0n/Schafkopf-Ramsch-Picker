@@ -43,11 +43,11 @@ function updateSlidersAndGamesModesOnLoad()
 }
 
 function showSettings() {
-    if (settings.style.display == "none") {
-        settings.style.display = "flex";
+    if (settings.style.display == "flex") {
+        settings.style.display = "none";
     }
     else {
-        settings.style.display = "none";
+        settings.style.display = "flex";
     }
 }
 
@@ -71,8 +71,8 @@ function resetSettings()
 }
 
 function updateSlider(value, id, updateSlider) {
-    console.log(value);
-    console.log(id);
+    // console.log(value);
+    // console.log(id);
 
     document.getElementById(id).innerHTML = value;
 
@@ -94,7 +94,7 @@ function BuildGamemodeSelectionAndWeight() {
             gamemodes.push(gamemodesInit[index]);
         }
     }
-    console.info(gamemodes);
+    // console.info(gamemodes);
 }
 
 function rollClick() {
@@ -136,7 +136,7 @@ function randomIntFromInterval(min, max) {
 
 function randomName() {
     const rand = Math.floor(Math.random() * gamemodes.length);
-    console.log(rand);
+    // console.log(rand);
     
     const name = gamemodes[rand];
     gamemode.innerText = name;

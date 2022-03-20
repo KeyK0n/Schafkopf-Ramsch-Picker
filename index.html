@@ -3,37 +3,77 @@
     <head>
         <title>Schafkopf Spielmodus</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/index.js"></script> 
         <link rel="icon" href="ressources/iconEichel.png">
     </head>
-    <body>
+    <body onload="updateSlidersAndGamesModesOnLoad()">
+        <div id="topbar">
+            <button onclick="showSettings()">Settings</button>
+            <div id="settings">
+                <div>Normal</div>
+                <div class="row">
+                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <div class="weight" id="normal">1</div>
+                </div>
+                
+                <div>10er eingereiht</div>
+                <div class="row">
+                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <div class="weight" id="zehner">1</div>
+                </div>
+
+                <div>Trumpffrei</div>
+                <div class="row">
+                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <div class="weight" id="trumpffrei">1</div>
+                </div>
+
+                <div>Trumpffrei 10er eingereiht</div>
+                <div class="row">
+                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <div class="weight" id="trumpffreiZehner">1</div>
+                </div>
+
+                <div>Geschoben</div>
+                <div class="row">
+                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <div class="weight" id="geschoben">1</div>
+                </div>
+
+                <div>Geschoben trumpffrei</div>
+                <div class="row">
+                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <div class="weight" id="geschobenTrumpffrei">1</div>
+                </div>
+
+                <div>Der Alte muss</div>
+                <div class="row">
+                    <input class="slider" type="range" min="0" max="10" style="touch-action:none;" onchange="updateSlider(this.value, this.nextElementSibling.id, true)" value="1">
+                    <div class="weight" id="derAlteMuss">1</div>
+                </div>
+                
+                <button onclick="resetSettings()">Reset</button>
+            </div>
+        </div>
         <div id="main">
-            <h1>Crazy Schafkopf Spielmodus Selektor</h1>
+            <h1>Schafkopf Ramsch Selektor</h1>
 
             <p id="gamemode">Gew&auml;hlter Spielmodus</p>
 
-            <button onclick="GamemodeSwitcher()">W&auml;hle Spielmodus</button>
+            <button onclick="rollClick()" id="gamemodeButton">W&auml;hle Spielmodus</button>
 
-            <img src="ressources/Schafkopf.jpg">
+            <div id="cardsContainer">
+                <div class="cards-fan-container">
+                    <img class="card-fan" id="card1" src="./Karten/schellenUnter.png" />
+                    <img class="card-fan" id="card2" src="./Karten/herzUnter.png" />
+                    <img class="card-fan" id="card3" src="./Karten/blattUnter.png" />
+                    <img class="card-fan" id="card4" src="./Karten/eichelUnter.png" />
+                    <img class="card-fan" id="card5" src="./Karten/schellenOber.png" />
+                    <img class="card-fan" id="card6" src="./Karten/herzOber.png" />
+                    <img class="card-fan" id="card7" src="./Karten/blattOber.png" />
+                    <img class="card-fan" id="card8" src="./Karten/eichelOber.png" />
+                </div>
+            </div>
         </div>
-
-        <script>
-            function GamemodeSwitcher() {
-                const gamemodes = [
-                    "Der Alte muss", 
-                    "Geschoben", 
-                    "10er eingereiht",
-                    "Normal",
-                    "Trumpffrei",
-                    "Trumpffrei 10er eingereiht"
-                ];
-
-                document.getElementById("gamemode").innerHTML = gamemodes[getRandomInt(gamemodes.length)];
-            }
-
-            function getRandomInt(max) {
-                return Math.floor(Math.random() * max);
-            }
-        </script>
-
     </body>
 </html>

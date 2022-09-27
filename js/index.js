@@ -115,7 +115,6 @@ function rollClick() {
         // Raffling animation
         // todo: min und max in einstellungen festlegen?
         var timesOfChanging = randomIntFromInterval(20, 25);
-        timesOfChanging = 25;
         setDeceleratingTimeout(randomName, 10, timesOfChanging);
 
         // todo: timeout umbauen zu async
@@ -132,58 +131,66 @@ function rollClick() {
                 degreeMultiplier--;
             }
 
-            // Change cards according to gamemode
-            console.log(gamemode.innerText);
+            // Change card images according to gamemode
+            var card1 = document.getElementById("card1");
+            var card2 = document.getElementById("card2");
+            var card3 = document.getElementById("card3");
+            var card4 = document.getElementById("card4");
+            var card5 = document.getElementById("card5");
+            var card6 = document.getElementById("card6");
+            var card7 = document.getElementById("card7");
+            var card8 = document.getElementById("card8");
+
+            var base_path = "resources/karten/";
 
             switch (gamemode.innerText) {
                 case "Normal":
                 case "Der Alte muss":
                 case "Geschoben":
-                    document.getElementById("card1").src = "resources/karten/schellen_unter.png";
-                    document.getElementById("card2").src = "resources/karten/herz_unter.png";
-                    document.getElementById("card3").src = "resources/karten/blatt_unter.png";
-                    document.getElementById("card4").src = "resources/karten/eichel_unter.png";
-                    document.getElementById("card5").src = "resources/karten/schellen_ober.png";
-                    document.getElementById("card6").src = "resources/karten/herz_ober.png";
-                    document.getElementById("card7").src = "resources/karten/blatt_ober.png";
-                    document.getElementById("card8_picture").src = "resources/karten/eichel_ober.png";
+                    card1.src = base_path + "schellen_unter.png";
+                    card2.src = base_path + "herz_unter.png";
+                    card3.src = base_path + "blatt_unter.png";
+                    card4.src = base_path + "eichel_unter.png";
+                    card5.src = base_path + "schellen_ober.png";
+                    card6.src = base_path + "herz_ober.png";
+                    card7.src = base_path + "blatt_ober.png";
+                    card8.src = base_path + "eichel_ober.png";
                     break;
                 case "Geschoben trumpffrei":
                 case "Trumpffrei":
-                    document.getElementById("card1").src = "resources/karten/schellen_zehner.png";
-                    document.getElementById("card2").src = "resources/karten/herz_zehner.png";
-                    document.getElementById("card3").src = "resources/karten/blatt_zehner.png";
-                    document.getElementById("card4").src = "resources/karten/eichel_zehner.png";
-                    document.getElementById("card5").src = "resources/karten/schellen_ass.png";
-                    document.getElementById("card6").src = "resources/karten/herz_ass.png";
-                    document.getElementById("card7").src = "resources/karten/blatt_ass.png";
-                    document.getElementById("card8_picture").src = "resources/karten/eichel_ass.png";
+                    card1.src = base_path + "schellen_zehner.png";
+                    card2.src = base_path + "herz_zehner.png";
+                    card3.src = base_path + "blatt_zehner.png";
+                    card4.src = base_path + "eichel_zehner.png";
+                    card5.src = base_path + "schellen_ass.png";
+                    card6.src = base_path + "herz_ass.png";
+                    card7.src = base_path + "blatt_ass.png";
+                    card8.src = base_path + "eichel_ass.png";
                     break;
                 case "10er eingereiht":
-                    document.getElementById("card1").src = "resources/karten/herz_neuner.png";
-                    document.getElementById("card2").src = "resources/karten/herz_zehner.png";
-                    document.getElementById("card3").src = "resources/karten/herz_koenig.png";
-                    document.getElementById("card4").src = "resources/karten/herz_ass.png";
-                    document.getElementById("card5").src = "resources/karten/blatt_unter.png";
-                    document.getElementById("card6").src = "resources/karten/eichel_unter.png";
-                    document.getElementById("card7").src = "resources/karten/blatt_ober.png";
-                    document.getElementById("card8_picture").src = "resources/karten/eichel_ober.png";
+                    card1.src = base_path + "herz_neuner.png";
+                    card2.src = base_path + "herz_zehner.png";
+                    card3.src = base_path + "herz_koenig.png";
+                    card4.src = base_path + "herz_ass.png";
+                    card5.src = base_path + "blatt_unter.png";
+                    card6.src = base_path + "eichel_unter.png";
+                    card7.src = base_path + "blatt_ober.png";
+                    card8.src = base_path + "eichel_ober.png";
                     break;
                 case "Trumpffrei 10er eingereiht":
-                    document.getElementById("card1").src = "resources/karten/schellen_koenig.png";
-                    document.getElementById("card2").src = "resources/karten/herz_koenig.png";
-                    document.getElementById("card3").src = "resources/karten/blatt_koenig.png";
-                    document.getElementById("card4").src = "resources/karten/eichel_koenig.png";
-                    document.getElementById("card5").src = "resources/karten/schellen_ass.png";
-                    document.getElementById("card6").src = "resources/karten/herz_ass.png";
-                    document.getElementById("card7").src = "resources/karten/blatt_ass.png";
-                    document.getElementById("card8_picture").src = "resources/karten/eichel_ass.png";
+                    card1.src = base_path + "schellen_koenig.png";
+                    card2.src = base_path + "herz_koenig.png";
+                    card3.src = base_path + "blatt_koenig.png";
+                    card4.src = base_path + "eichel_koenig.png";
+                    card5.src = base_path + "schellen_ass.png";
+                    card6.src = base_path + "herz_ass.png";
+                    card7.src = base_path + "blatt_ass.png";
+                    card8.src = base_path + "eichel_ass.png";
                     break;
                 default:
                     // does not occur
                     break;
             }
-
         }, timesOfChanging * 120);
     }, 200);
 }
@@ -230,8 +237,8 @@ function setDeceleratingTimeout(callback, factor, times) {
 }
 
 function turnCard(state) {
-    var card8 = document.getElementById('card8');
-    var card = card8.getElementsByClassName('card')[0];
+    var card8_container = document.getElementById('card8_container');
+    var card = card8_container.getElementsByClassName('card')[0];
     if (state) {
         card.classList.add('is-flipped');
     } else {

@@ -7,8 +7,7 @@ var gamemodes;
 var gamemode;
 var gamemodeButton;
 
-function updateSlidersAndGamesModesOnLoad()
-{
+function updateSlidersAndGamesModesOnLoad() {
     // Init
     settings = document.getElementById("settings");
 
@@ -51,8 +50,7 @@ function showSettings() {
     }
 }
 
-function resetSettings()
-{
+function resetSettings() {
     // Reset sliders
     // And build gamemodes array on last slider update
     var updateWeights = false;
@@ -71,12 +69,9 @@ function resetSettings()
 }
 
 function updateSlider(value, id, updateSlider) {
-    // console.log(value);
-    // console.log(id);
-
     document.getElementById(id).innerHTML = value;
 
-    // update array
+    // Update array
     if (updateSlider) {
         BuildGamemodeSelectionAndWeight();
     }
@@ -94,40 +89,103 @@ function BuildGamemodeSelectionAndWeight() {
             gamemodes.push(gamemodesInit[index]);
         }
     }
-    // console.info(gamemodes);
+
+    if (gamemodes.length == 0) {
+        gamemodes.push("Du bist a Depp");
+    }
 }
 
 function rollClick() {
     // Set button disabled
     gamemodeButton.disabled = true;
 
-    BuildGamemodeSelectionAndWeight();
-
-    // Reset animations of cards
-    var cards = document.getElementsByClassName("card-fan");
-
-    for (let index = 0; index < cards.length; index++) {
-        cards[index].style.transform = "none";
-    }
+    turnCard(true);
     
-    // Raffling animation
-    // todo: min und max in einstellungen festlegen?
-    var timesOfChanging = randomIntFromInterval(15,20);
-    setDeceleratingTimeout(randomName, 10, timesOfChanging);
-
-    // todo: timeout umbauen zu 
+    // Timeout before choosing gamemode
     setTimeout(() => {
-        // Set button enabled after timeout
-        gamemodeButton.disabled = false;
-        
-        // Animations after timeout
-        var degreeMultiplier = 4;
-        for (let index = 0; index < cards.length; index++) {
-            cards[index].style.transform = "rotate(" + degreeMultiplier * 8 + "deg)";
-            degreeMultiplier--;
-        }
+        BuildGamemodeSelectionAndWeight();
 
-    }, timesOfChanging*85);
+        // Reset animations of cards
+        var cards = document.getElementsByClassName("card-fan");
+
+        for (let index = 0; index < cards.length; index++) {
+            cards[index].style.transform = "none";
+        }
+        
+        // Raffling animation
+        // todo: min und max in einstellungen festlegen?
+        var timesOfChanging = randomIntFromInterval(20, 25);
+        timesOfChanging = 25;
+        setDeceleratingTimeout(randomName, 10, timesOfChanging);
+
+        // todo: timeout umbauen zu async
+        setTimeout(() => {
+            turnCard(false);
+            
+            // Set button enabled after timeout
+            gamemodeButton.disabled = false;
+            
+            // Animations after timeout
+            var degreeMultiplier = 4;
+            for (let index = 0; index < cards.length; index++) {
+                cards[index].style.transform = "rotate(" + degreeMultiplier * 8 + "deg)";
+                degreeMultiplier--;
+            }
+
+            // Change cards according to gamemode
+            console.log(gamemode.innerText);
+
+            switch (gamemode.innerText) {
+                case "Normal":
+                case "Der Alte muss":
+                case "Geschoben":
+                    document.getElementById("card1").src = "resources/karten/schellen_unter.png";
+                    document.getElementById("card2").src = "resources/karten/herz_unter.png";
+                    document.getElementById("card3").src = "resources/karten/blatt_unter.png";
+                    document.getElementById("card4").src = "resources/karten/eichel_unter.png";
+                    document.getElementById("card5").src = "resources/karten/schellen_ober.png";
+                    document.getElementById("card6").src = "resources/karten/herz_ober.png";
+                    document.getElementById("card7").src = "resources/karten/blatt_ober.png";
+                    document.getElementById("card8_picture").src = "resources/karten/eichel_ober.png";
+                    break;
+                case "Geschoben trumpffrei":
+                case "Trumpffrei":
+                    document.getElementById("card1").src = "resources/karten/schellen_zehner.png";
+                    document.getElementById("card2").src = "resources/karten/herz_zehner.png";
+                    document.getElementById("card3").src = "resources/karten/blatt_zehner.png";
+                    document.getElementById("card4").src = "resources/karten/eichel_zehner.png";
+                    document.getElementById("card5").src = "resources/karten/schellen_ass.png";
+                    document.getElementById("card6").src = "resources/karten/herz_ass.png";
+                    document.getElementById("card7").src = "resources/karten/blatt_ass.png";
+                    document.getElementById("card8_picture").src = "resources/karten/eichel_ass.png";
+                    break;
+                case "10er eingereiht":
+                    document.getElementById("card1").src = "resources/karten/herz_neuner.png";
+                    document.getElementById("card2").src = "resources/karten/herz_zehner.png";
+                    document.getElementById("card3").src = "resources/karten/herz_koenig.png";
+                    document.getElementById("card4").src = "resources/karten/herz_ass.png";
+                    document.getElementById("card5").src = "resources/karten/blatt_unter.png";
+                    document.getElementById("card6").src = "resources/karten/eichel_unter.png";
+                    document.getElementById("card7").src = "resources/karten/blatt_ober.png";
+                    document.getElementById("card8_picture").src = "resources/karten/eichel_ober.png";
+                    break;
+                case "Trumpffrei 10er eingereiht":
+                    document.getElementById("card1").src = "resources/karten/schellen_koenig.png";
+                    document.getElementById("card2").src = "resources/karten/herz_koenig.png";
+                    document.getElementById("card3").src = "resources/karten/blatt_koenig.png";
+                    document.getElementById("card4").src = "resources/karten/eichel_koenig.png";
+                    document.getElementById("card5").src = "resources/karten/schellen_ass.png";
+                    document.getElementById("card6").src = "resources/karten/herz_ass.png";
+                    document.getElementById("card7").src = "resources/karten/blatt_ass.png";
+                    document.getElementById("card8_picture").src = "resources/karten/eichel_ass.png";
+                    break;
+                default:
+                    // does not occur
+                    break;
+            }
+
+        }, timesOfChanging * 120);
+    }, 200);
 }
 
 function randomIntFromInterval(min, max) {
@@ -136,7 +194,6 @@ function randomIntFromInterval(min, max) {
 
 function randomName() {
     const rand = Math.floor(Math.random() * gamemodes.length);
-    // console.log(rand);
     
     const name = gamemodes[rand];
     gamemode.innerText = name;
@@ -170,4 +227,14 @@ function setDeceleratingTimeout(callback, factor, times) {
     })(times, 0);
 
     setTimeout(internalCallback, factor);
+}
+
+function turnCard(state) {
+    var card8 = document.getElementById('card8');
+    var card = card8.getElementsByClassName('card')[0];
+    if (state) {
+        card.classList.add('is-flipped');
+    } else {
+        card.classList.remove('is-flipped');
+    }
 }

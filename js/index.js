@@ -7,6 +7,8 @@ var gamemodes;
 var gamemode;
 var gamemodeButton;
 
+var shakeCounter = 0;
+
 function updateSlidersAndGamesModesOnLoad() {
     // Init
     settings = document.getElementById("settings");
@@ -39,6 +41,102 @@ function updateSlidersAndGamesModesOnLoad() {
 
         updateSlider(slider.value, slider.nextElementSibling.id, updateWeights);
     }
+
+    // Countdown
+    setCountdown();
+    var countdownInterval = setInterval(function() {
+        setCountdown()
+    }, 100);
+
+    requestAccelerometer();
+}
+
+function requestAccelerometer() {
+    if (typeof DeviceOrientationEvent !== 'undefined' &&
+        typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+            .then(response => {
+                if (response === 'granted') {
+                    handleOrientation();
+                }
+            })
+            .catch(console.error);
+    } else {
+        handleOrientation();
+    }
+}
+
+function handleOrientation() {
+    if (gamemodeButton.disabled) {
+        return;
+    }
+
+    if (typeof window.DeviceMotionEvent != 'undefined') {
+        // Shake sensitivity (a lower number is more)
+        var sensitivity = 20;
+    
+        // Position variables
+        var x1 = 0, y1 = 0, z1 = 0, x2 = 0, y2 = 0, z2 = 0;
+    
+        // Listen to motion events and update the position
+        window.addEventListener('devicemotion', function (e) {
+            x1 = e.accelerationIncludingGravity.x;
+            y1 = e.accelerationIncludingGravity.y;
+            z1 = e.accelerationIncludingGravity.z;
+        }, false);
+    
+        // Periodically check the position and fire
+        // if the change is greater than the sensitivity
+        setInterval(function () {
+            var change = Math.abs(x1-x2+y1-y2+z1-z2);
+    
+            if (change > sensitivity) {
+                window.removeEventListener('devicemotion', null, false);
+                // Prevent rerolling and spamming
+                if (gamemodeButton.disabled) {
+                    shakeCounter++;
+                    if (shakeCounter > 3) {
+                        alert('Schütteln kannst du was anderes! 🍆💦');
+                        shakeCounter = 0;
+                    }
+                } else {
+                    shakeCounter = 0;
+                    rollClick();
+                }
+            }
+    
+            // Update new position
+            x2 = x1;
+            y2 = y1;
+            z2 = z1;
+        }, 500);
+    }
+        
+}
+
+// Countdown functions
+function getNextDayOfTheWeek(dayName, excludeToday = true, refDate = new Date()) {
+    const dayOfWeek = ["sun","mon","tue","wed","thu","fri","sat"]
+                      .indexOf(dayName.slice(0,3).toLowerCase());
+    if (dayOfWeek < 0) return;
+    refDate.setHours(18,0,0,0);
+    refDate.setDate(refDate.getDate() + +!!excludeToday + 
+                    (dayOfWeek + 7 - refDate.getDay() - +!!excludeToday) % 7);
+    return refDate;
+}
+function getDateTimeSpan(date) {
+    var now = new Date();
+    var difference = date - now;
+    var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    return days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+}
+function setCountdown() {
+    var countDownDate = getNextDayOfTheWeek("Wednesday", false);
+    var countdownElement = document.getElementById("countdown");
+    countdownElement.innerHTML = getDateTimeSpan(countDownDate);
 }
 
 function showSettings() {
@@ -82,23 +180,38 @@ function BuildGamemodeSelectionAndWeight() {
     gamemodes.length = 0;
 
     var weights = document.getElementsByClassName("weight");
-
+    standardSettingsActive = true;
     for (let index = 0; index < weights.length; index++) {
         var value = weights[index].innerHTML;
         for (let j = 0; j < value; j++) {
             gamemodes.push(gamemodesInit[index]);
+        }
+
+        if (value != 1) {
+            standardSettingsActive = false;
         }
     }
 
     if (gamemodes.length == 0) {
         gamemodes.push("Du bist a Depp");
     }
+
+    // Display standard settings active
+    if (standardSettingsActive) {
+        document.getElementById("standardSettingsActive").style.display = "flex";
+    } else {
+        document.getElementById("standardSettingsActive").style.display = "none";
+    }
 }
 
 function rollClick() {
+    if (gamemodeButton.disabled) {
+        return;
+    }
+
     // Set button disabled
     gamemodeButton.disabled = true;
-
+    //stopAccelerometer();
     turnCard(true);
     
     // Timeout before choosing gamemode
@@ -120,6 +233,7 @@ function rollClick() {
         // todo: timeout umbauen zu async
         setTimeout(() => {
             turnCard(false);
+            //startAccelerometer();
             
             // Set button enabled after timeout
             gamemodeButton.disabled = false;

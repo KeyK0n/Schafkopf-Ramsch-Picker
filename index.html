@@ -31,6 +31,7 @@
     <body onload="updateSlidersAndGamesModesOnLoad()">
         <div id="topbar">
             <button onclick="showSettings();this.blur();" style="touch-action: none;">Settings</button>
+            <div id="standardSettingsActive">Standard Einstellungen aktiv</div>
             <div id="settings">
                 <div>Normal</div>
                 <div class="row">
@@ -77,7 +78,7 @@
                 <button onclick="resetSettings()">Reset</button>
             </div>
         </div>
-        <div id="main">
+        <div id="main"> 
             <h1>Schafkopf Ramsch Selektor</h1>
 
             <p id="gamemode">Gew&auml;hlter Spielmodus</p>
@@ -102,6 +103,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div id="countdownContainer">
+                <div>Nächste Kaddlung</div>
+                <div id="countdown">4d 2h 12m 10s</div>
             </div>
         </div>
     </body>

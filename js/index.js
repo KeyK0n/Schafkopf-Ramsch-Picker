@@ -9,6 +9,16 @@ var gamemodeButton;
 
 var shakeCounter = 0;
 
+// Settings for countdown
+var nameOfDayEvent = "Wednesday";
+var hourOfEvent = 18;
+var minuteOfEvent = 0;
+var excludedDates = [
+    new Date(2023, 10, 1, hourOfEvent, minuteOfEvent),
+    new Date(2023, 11, 27, hourOfEvent, minuteOfEvent),
+];
+// Month: 0 = January, 1 = February, etc.
+
 function updateSlidersAndGamesModesOnLoad() {
     // Init
     settings = document.getElementById("settings");
@@ -115,14 +125,29 @@ function handleOrientation() {
 }
 
 // Countdown functions
-function getNextDayOfTheWeek(dayName, excludeToday = true, refDate = new Date()) {
+function getNextDayOfTheWeek(dayName, hour = 0, minute = 0) {
     const dayOfWeek = ["sun","mon","tue","wed","thu","fri","sat"]
                       .indexOf(dayName.slice(0,3).toLowerCase());
-    if (dayOfWeek < 0) return;
-    refDate.setHours(18,0,0,0);
-    refDate.setDate(refDate.getDate() + +!!excludeToday + 
-                    (dayOfWeek + 7 - refDate.getDay() - +!!excludeToday) % 7);
-    return refDate;
+    var now = new Date()
+    var result = new Date(
+                    now.getFullYear(),
+                    now.getMonth(),
+                    now.getDate() + (7 + dayOfWeek - now.getDay()) % 7,
+                    hour,
+                    minute)
+    
+    if (result < now)
+        result.setDate(result.getDate() + 7)
+    
+    // Exclude dates
+    for (let index = 0; index < excludedDates.length; index++) {
+        const excludeDate = excludedDates[index];
+        if (result.getTime() == excludeDate.getTime()) {
+            result.setDate(result.getDate() + 7)
+        }
+    }
+
+    return result
 }
 function getDateTimeSpan(date) {
     var now = new Date();
@@ -134,7 +159,7 @@ function getDateTimeSpan(date) {
     return days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 }
 function setCountdown() {
-    var countDownDate = getNextDayOfTheWeek("Wednesday", false);
+    var countDownDate = getNextDayOfTheWeek(nameOfDayEvent, hourOfEvent, minuteOfEvent);
     var countdownElement = document.getElementById("countdown");
     countdownElement.innerHTML = getDateTimeSpan(countDownDate);
 }
@@ -330,9 +355,9 @@ function randomName() {
         { transform: 'translateY(-30%)',  opacity: '0.7' },
         { transform: 'translateY(-20%)',  opacity: '0.8' },
         { transform: 'translateY(-10%)',  opacity: '0.9' },
-        { transform: 'translateY(0)', opacity: '1' }           
-        ], { 
-                duration: 25,            
+        { transform: 'translateY(0)', opacity: '1' }
+        ], {
+                duration: 25,
             }
     );
 }

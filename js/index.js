@@ -14,8 +14,8 @@ var nameOfDayEvent = "Wednesday";
 var hourOfEvent = 18;
 var minuteOfEvent = 0;
 var excludedDates = [
-    new Date(2023, 10, 1, hourOfEvent, minuteOfEvent),
     new Date(2023, 11, 27, hourOfEvent, minuteOfEvent),
+    new Date(2024, 0, 3, hourOfEvent, minuteOfEvent),
 ];
 // Month: 0 = January, 1 = February, etc.
 
@@ -52,11 +52,8 @@ function updateSlidersAndGamesModesOnLoad() {
         updateSlider(slider.value, slider.nextElementSibling.id, updateWeights);
     }
 
-    // Countdown
+    // Init countdown
     setCountdown();
-    var countdownInterval = setInterval(function() {
-        setCountdown()
-    }, 100);
 
     requestAccelerometer();
 }
@@ -160,8 +157,16 @@ function getDateTimeSpan(date) {
 }
 function setCountdown() {
     var countDownDate = getNextDayOfTheWeek(nameOfDayEvent, hourOfEvent, minuteOfEvent);
-    var countdownElement = document.getElementById("countdown");
-    countdownElement.innerHTML = getDateTimeSpan(countDownDate);
+
+    //Flipdown timer
+    var flipdown = new FlipDown(countDownDate / 1000, "countdown", {
+        headings: ["Tage", "Stunden", "Minuten", "Sekunden"],
+        theme: "light"
+    })
+    .start()
+    .ifEnded(() => {
+        setCountdown();
+    });
 }
 
 function showSettings() {

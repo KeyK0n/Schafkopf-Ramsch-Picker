@@ -17,6 +17,8 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="#19222c">
         <!-- Source icon: https://de.wikibooks.org/wiki/Kartenspiele:_Schafkopf#/media/Datei:Eichel_Bayerisch.svg -->
         <link rel="manifest" href="manifest.json">
+        <script src="node_modules/flipdown/dist/flipdown.js"></script>
+        <link rel="stylesheet" href="node_modules/flipdown/dist/flipdown.css">
         <script>
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('sw.js');
@@ -107,7 +109,7 @@
 
             <div id="countdownContainer">
                 <div>Nächste Kaddlung</div>
-                <div id="countdown">4d 2h 12m 10s</div>
+                <div id="countdown" class="flipdown" style="font-size: 15px;"></div>
             </div>
         </div>
     </body>

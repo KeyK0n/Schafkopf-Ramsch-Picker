@@ -1,0 +1,15 @@
+{
+    "short_name": "Schafkopf Spielmodus",
+    "name": "Schafkopf Spielmodus",
+    "icons": [
+        {
+            "src": "/resources/icon_eichel2.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/index.html",
+    "background_color": "#19222c",
+    "display": "standalone",
+    "theme_color": "#19222c"
+}

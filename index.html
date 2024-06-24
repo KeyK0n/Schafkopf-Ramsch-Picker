@@ -1,14 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
     <head>
         <title>Schafkopf Spielmodus</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script src="js/index.js"></script> 
+        <script src="js/index.js"></script>
+        <!-- Source icon: cropped from larger icon -->
         <link rel="icon" href="resources/icon_eichel.png">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Schafkopf Ramsch Selektor">
+        <!-- Chrome, Firefox OS and Opera -->
+        <meta name="theme-color" content="#19222c">
+        <!-- Windows Phone -->
+        <meta name="msapplication-navbutton-color" content="#19222c">
+        <!-- iOS Safari -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="#19222c">
+        <!-- Source icon: https://de.wikibooks.org/wiki/Kartenspiele:_Schafkopf#/media/Datei:Eichel_Bayerisch.svg -->
+        <link rel="manifest" href="manifest.json">
+        <script src="node_modules/flipdown/dist/flipdown.js"></script>
+        <link rel="stylesheet" href="node_modules/flipdown/dist/flipdown.css">
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js');
+            }
+            
+            window.addEventListener('load', (event) => {
+                // Fold the card at loading
+                turnCard(true);
+            });
+        </script>
     </head>
     <body onload="updateSlidersAndGamesModesOnLoad()">
         <div id="topbar">
             <button onclick="showSettings();this.blur();" style="touch-action: none;">Settings</button>
+            <div id="standardSettingsActive">Standard Einstellungen aktiv</div>
             <div id="settings">
                 <div>Normal</div>
                 <div class="row">
@@ -55,13 +80,15 @@
                 <button onclick="resetSettings()">Reset</button>
             </div>
         </div>
-        <div id="main">
+        <div id="main"> 
             <h1>Schafkopf Ramsch Selektor</h1>
 
             <p id="gamemode">Gew&auml;hlter Spielmodus</p>
 
             <button onclick="rollClick()" id="gamemodeButton">W&auml;hle Spielmodus</button>
 
+            <!-- Source background: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj6gaqc6z3JSAANb00lLfxIERdanXoC7jalQ&usqp=CAU -->
+            <!-- Source cards: todo -->
             <div id="cardsContainer">
                 <div class="cards-fan-container">
                     <img class="card-fan" id="card1" src="resources/karten/schellen_unter.png" />
@@ -71,8 +98,18 @@
                     <img class="card-fan" id="card5" src="resources/karten/schellen_ober.png" />
                     <img class="card-fan" id="card6" src="resources/karten/herz_ober.png" />
                     <img class="card-fan" id="card7" src="resources/karten/blatt_ober.png" />
-                    <img class="card-fan" id="card8" src="resources/karten/eichel_ober.png" />
+                    <div class="scene card-fan" id="card8_container">
+                        <div class="card">
+                          <img class="card__face card__face--front" id="card8" src="resources/karten/eichel_ober.png" />
+                          <img class="card__face card__face--back" src="resources/karten/background.png" />
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div id="countdownContainer">
+                <div>Nächste Kaddlung</div>
+                <div id="countdown" class="flipdown" style="font-size: 15px;"></div>
             </div>
         </div>
     </body>
